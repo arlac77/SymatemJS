@@ -6,7 +6,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "src/query.mjs",
+  "main": "./src/query.mjs",
   "exports": {
     ".": "./src/query.mjs",
     "./": "./"
