@@ -22,8 +22,8 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "documentation readme src/query.mjs --section=API && documentation readme ./src/query.mjs --section=API",
-    "lint": "documentation lint src/query.mjs && documentation lint ./src/query.mjs"
+    "docs": "documentation readme ./src/query.mjs --section=API",
+    "lint": "documentation lint ./src/query.mjs"
   },
   "dependencies": {
     "SymatemJS": "git+https://github.com/Symatem/SymatemJS.git"
