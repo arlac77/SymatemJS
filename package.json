@@ -1,4 +1,8 @@
 {
   "name": "SymatemQuery",
-  "main": "src/query.mjs"
+  "main": "src/query.mjs",
+  
+   "dependencies": {
+    "SymatemJS": "git+https://github.com/Symatem/SymatemJS.git",
+  }
 }
