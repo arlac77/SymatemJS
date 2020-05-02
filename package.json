@@ -1,8 +1,54 @@
 {
   "name": "SymatemQuery",
+  "version": "0.0.0-semantic-release",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "type": "module",
   "main": "src/query.mjs",
-  
-   "dependencies": {
+  "exports": {
+    ".": "./src/query.mjs",
+    "./": "./"
+  },
+  "description": "queries within SymatemJS",
+  "contributors": [
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "cover": "#overwrite c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
+    "test": "ava --timeout 2m",
+    "docs": "documentation readme src/query.mjs --section=API",
+    "lint": "documentation lint src/query.mjs"
+  },
+  "dependencies": {
     "SymatemJS": "git+https://github.com/Symatem/SymatemJS.git"
+  },
+  "devDependencies": {
+    "c8": "^7.1.1",
+    "ava": "^3.8.1",
+    "documentation": "^12.3.0",
+    "semantic-release": "^17.0.7"
+  },
+  "engines": {
+    "node": ">=12.16.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arlac77/SymatemQuery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arlac77/SymatemQuery/issues"
+  },
+  "homepage": "https://github.com/arlac77/SymatemQuery#readme",
+  "template": {
+    "inheritFrom": [
+      "arlac77/template-arlac77-github",
+      "arlac77/template-esm-only"
+    ]
   }
 }
