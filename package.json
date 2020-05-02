@@ -3,6 +3,6 @@
   "main": "src/query.mjs",
   
    "dependencies": {
-    "SymatemJS": "git+https://github.com/Symatem/SymatemJS.git",
+    "SymatemJS": "git+https://github.com/Symatem/SymatemJS.git"
   }
 }
