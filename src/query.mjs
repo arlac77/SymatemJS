@@ -8,41 +8,42 @@ export function DeclareVariable(name) {
   return v;
 }
 
-export function* tripleQueries(backend, tripleQueries = []) {
-  const types2Mask = {
-    "symbol:string:string": backend.queryMasks.VMM,
-    "string:string:symbol": backend.queryMasks.MMV,
-    "symbol:string:symbol": backend.queryMasks.VMV,
-    "symbol:symbol:symbol": backend.queryMasks.VVV
-  };
+export function SymatemQueryMixin(base) {
+  return class SymatemQueryMixin extends base {
+    *tripleQueries(tripleQueries = []) {
+      const types2Mask = {
+        "symbol:string:string": this.queryMasks.VMM,
+        "string:string:symbol": this.queryMasks.MMV,
+        "symbol:string:symbol": this.queryMasks.VMV,
+        "symbol:symbol:symbol": this.queryMasks.VVV
+      };
 
-  const results = new Map();
+      const results = new Map();
 
-  for (let tripleQuery of tripleQueries) {
-    tripleQuery
-      .filter(s => typeof s === "symbol" && !results.get(s))
-      .forEach(s => results.set(s, []));
+      for (let tripleQuery of tripleQueries) {
+        const mask = types2Mask[tripleQuery.map(s => typeof s).join(":")];
+        //console.log(tripleQuery);
 
-    const mask = types2Mask[tripleQuery.map(s => typeof s).join(":")];
-    //console.log(tripleQuery);
+        const query = tripleQuery.map(s => {
+          if (typeof s === "symbol") {
+            const value = results.get(s);
+            return value === undefined ? this.symbolByName.Void : value;
+          }
+          return s;
+        });
 
-    const query = tripleQuery.map(s => {
-      if(typeof s === "symbol") {
-        const value = results.get(s);
-        return value.length ? value[0] : backend.symbolByName.Void; }
-      return s;}
-    );
+        //console.log(mask, query);
 
-    console.log(mask, query);
-    
-    for (const r of backend.queryTriples(mask, query)) {
-      tripleQuery.forEach((s, i) => {
-        if (typeof s === "symbol" && query[i] === backend.symbolByName.Void) {
-          results.get(s).push(r[i]);
+        for (const r of this.queryTriples(mask, query)) {
+          tripleQuery.forEach((s, i) => {
+            if (typeof s === "symbol" && query[i] === this.symbolByName.Void) {
+              results.set(s, r[i]);
+            }
+          });
         }
-      });
-    }
-  }
+      }
 
-  yield results;
+      yield results;
+    }
+  };
 }
