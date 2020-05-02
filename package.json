@@ -1,3 +1,4 @@
 {
-  "name": "SymatemQuery"
+  "name": "SymatemQuery",
+  "main": "src/query.mjs"
 }
