@@ -8,7 +8,7 @@ import {
 
 import { SymatemQueryMixin } from "SymatemQuery";
 
-export async function prepareBackend() {
+export async function prepareBackend(options = {}) {
   await loaded;
 
   const BackendClass = SymatemQueryMixin(RustWasmBackend);
@@ -31,7 +31,17 @@ export async function prepareBackend() {
 
   const writer = new Diff(backend, repositoryNamespace, rt);
 
+  const symbols = {};
+
+  Object.entries(options).forEach(([name, number]) => {
+    for (let n = 1; n <= number; n++) {
+      let key = `${name}${n}`;
+      symbols[key] = writer.createSymbol(recordingNamespace);
+    }
+  });
+
   return {
+    ...symbols,
     writer,
     backend,
     recordingNamespace,
