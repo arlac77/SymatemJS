@@ -23,12 +23,14 @@ test("tripleQueries", async t => {
   writer.setTriple([s3, a3, s4], true);
   writer.setTriple([s3, a3, s5], true);
 
+  const { A, B, C } = backend.variables("A", "B", "C");
+
   const results = [];
 
   for (const r of backend.tripleQueries([
-    [s1, a1, backend.variable("A")],
-    [backend.variable("A"), a2, backend.variable("B")],
-    [backend.variable("B"), a3, backend.variable("C")]
+    [s1, a1, A],
+    [A, a2, B],
+    [B, a3, C]
   ])) {
     results.push(r);
   }
@@ -37,14 +39,14 @@ test("tripleQueries", async t => {
 
   t.deepEqual(results, [
     new Map([
-      [backend.variable("A"), s2],
-      [backend.variable("B"), s3],
-      [backend.variable("C"), s4]
+      [A, s2],
+      [B, s3],
+      [C, s4]
     ]),
     new Map([
-      [backend.variable("A"), s2],
-      [backend.variable("B"), s3],
-      [backend.variable("C"), s5]
+      [A, s2],
+      [B, s3],
+      [C, s5]
     ])
   ]);
 });

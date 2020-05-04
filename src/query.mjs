@@ -2,13 +2,17 @@ const _variables = {};
 
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
-    variable(name) {
-      let v = _variables[name];
-      if (!v) {
-        v = _variables[name] = Symbol(name);
+    variables(...names) {
+      const result = {};
+      for (const name of names) {
+        let v = _variables[name];
+        if (!v) {
+          v = _variables[name] = Symbol(name);
+        }
+        result[name] = v;
       }
 
-      return v;
+      return result;
     }
 
     *tripleQueries(tripleQueries = [], initial = new Map()) {
@@ -25,7 +29,9 @@ export function SymatemQueryMixin(base) {
           return s;
         });
 
-        const mask = this.queryMasks[tripleQuery.map(s => typeof s === 'symbol' ? 'V' : 'M').join('')];
+        const mask = this.queryMasks[
+          tripleQuery.map(s => (typeof s === "symbol" ? "V" : "M")).join("")
+        ];
 
         for (const r of this.queryTriples(mask, query)) {
           const results = new Map(initial);
