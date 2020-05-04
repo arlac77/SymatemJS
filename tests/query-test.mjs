@@ -1,8 +1,6 @@
 import test from "ava";
 import { prepareBackend } from "./helpers/util.mjs";
 
-import { DeclareVariable } from "SymatemQuery";
-
 test("tripleQueries", async t => {
   const {
     backend,
@@ -28,9 +26,9 @@ test("tripleQueries", async t => {
   const results = [];
 
   for (const r of backend.tripleQueries([
-    [s1, a1, DeclareVariable("A")],
-    [DeclareVariable("A"), a2, DeclareVariable("B")],
-    [DeclareVariable("B"), a3, DeclareVariable("C")]
+    [s1, a1, backend.variable("A")],
+    [backend.variable("A"), a2, backend.variable("B")],
+    [backend.variable("B"), a3, backend.variable("C")]
   ])) {
     results.push(r);
   }
@@ -39,14 +37,14 @@ test("tripleQueries", async t => {
 
   t.deepEqual(results, [
     new Map([
-      [DeclareVariable("A"), s2],
-      [DeclareVariable("B"), s3],
-      [DeclareVariable("C"), s4]
+      [backend.variable("A"), s2],
+      [backend.variable("B"), s3],
+      [backend.variable("C"), s4]
     ]),
     new Map([
-      [DeclareVariable("A"), s2],
-      [DeclareVariable("B"), s3],
-      [DeclareVariable("C"), s5]
+      [backend.variable("A"), s2],
+      [backend.variable("B"), s3],
+      [backend.variable("C"), s5]
     ])
   ]);
 });

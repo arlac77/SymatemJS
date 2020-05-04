@@ -1,15 +1,16 @@
 const _variables = {};
-export function DeclareVariable(name) {
-  let v = _variables[name];
-  if (!v) {
-    v = _variables[name] = Symbol(name);
-  }
-
-  return v;
-}
 
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
+    variable(name) {
+      let v = _variables[name];
+      if (!v) {
+        v = _variables[name] = Symbol(name);
+      }
+
+      return v;
+    }
+
     *tripleQueries(tripleQueries = [], initial = new Map()) {
       if (tripleQueries.length === 0) {
         yield initial;
