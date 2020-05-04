@@ -15,16 +15,7 @@ export function SymatemQueryMixin(base) {
       if (tripleQueries.length === 0) {
         yield initial;
       } else {
-        const types2Mask = {
-          "symbol:string:string": this.queryMasks.VMM,
-          "string:string:symbol": this.queryMasks.MMV,
-          "symbol:string:symbol": this.queryMasks.VMV,
-          "symbol:symbol:symbol": this.queryMasks.VVV
-        };
-
         const tripleQuery = tripleQueries.shift();
-
-        const mask = types2Mask[tripleQuery.map(s => typeof s).join(":")];
 
         const query = tripleQuery.map(s => {
           if (typeof s === "symbol") {
@@ -33,6 +24,8 @@ export function SymatemQueryMixin(base) {
           }
           return s;
         });
+
+        const mask = this.queryMasks[tripleQuery.map(s => typeof s === 'symbol' ? 'V' : 'M').join('')];
 
         for (const r of this.queryTriples(mask, query)) {
           const results = new Map(initial);
