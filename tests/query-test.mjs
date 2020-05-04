@@ -3,6 +3,7 @@ import { prepareBackend } from "./helpers/util.mjs";
 
 test("tripleQueries", async t => {
   const {
+    recordingNamespace,
     backend,
     writer,
     a1,
@@ -23,7 +24,7 @@ test("tripleQueries", async t => {
   writer.setTriple([s3, a3, s4], true);
   writer.setTriple([s3, a3, s5], true);
 
-  const { A, B, C } = backend.variables("A", "B", "C");
+  const { A, B, C } = backend.variables(recordingNamespace, "A", "B", "C");
 
   const results = [];
 
@@ -35,7 +36,7 @@ test("tripleQueries", async t => {
     results.push(r);
   }
 
-  console.log(results);
+  console.log(results.map(r => new Map([...r.entries()].map(([k,v]) => [backend.getData(k),v]))));
 
   t.deepEqual(results, [
     new Map([
