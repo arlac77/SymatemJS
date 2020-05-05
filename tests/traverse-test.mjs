@@ -1,7 +1,7 @@
 import test from "ava";
 import { prepareBackend } from "./helpers/util.mjs";
 
-test("tripleQueries", async t => {
+test("traverse", async t => {
   const {
     recordingNamespace,
     backend,
@@ -26,17 +26,15 @@ test("tripleQueries", async t => {
 
   const results = [];
 
-  for (const r of backend.traverse([
-    [A, a1, B]
-  ]
-,
-   new Map([[A,s1]]),
-   new Map([[B,A]])
-   )) {
+  for (const r of backend.traverse(
+    [[A, a1, B]],
+    new Map([[A, s1]]),
+    new Map([[B, A]])
+  )) {
     results.push(r);
   }
 
-  console.log(results.map(r => new Map([...r.entries()].map(([k,v]) => [backend.getData(k),v]))));
+   console.log(results.map(r => new Map([...r.entries()].map(([k,v]) => [backend.getData(k),v]))));
 
   t.deepEqual(results, [
     new Map([
