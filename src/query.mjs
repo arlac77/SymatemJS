@@ -58,5 +58,20 @@ export function SymatemQueryMixin(base) {
         }
       }
     }
+    
+     /**
+      * Traverse the graph by applying tripleQuery over and over again.
+      * After each iteration papping results back into query (by using result2input)
+      * @param {Symbol[][]} queries
+      * @param {Map<Variable,Symbol>} initial
+      * @param {Map<Variable,Variable>} result2input
+      * @return {Map<Variable,Symbol>}
+      */
+    *traverse(queries, initial, result2intput) {
+      for(const result of this.tripleQueries(queries, initial) {
+        yield result;
+        initial = new Map([...result2input.entries()].map(([k,v]) => [v,result.get(v)]));
+      }
+    }
   };
 }
