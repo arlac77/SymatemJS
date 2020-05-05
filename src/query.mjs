@@ -30,7 +30,7 @@ export function SymatemQueryMixin(base) {
       if (tripleQueries.length === 0) {
         yield initial;
       } else {
-        const tripleQuery = tripleQueries.shift();
+        const tripleQuery = tripleQueries[0];
 
         const isVariable = tripleQuery.map(s => this.isVariable(s));
 
@@ -54,7 +54,7 @@ export function SymatemQueryMixin(base) {
               results.set(s, r[i]);
             }
           });
-          yield* this.tripleQueries(tripleQueries, results);
+          yield* this.tripleQueries(tripleQueries.slice(1), results);
         }
       }
     }
@@ -67,8 +67,8 @@ export function SymatemQueryMixin(base) {
       * @param {Map<Variable,Variable>} result2input
       * @return {Map<Variable,Symbol>}
       */
-    *traverse(queries, initial, result2intput) {
-      for(const result of this.tripleQueries(queries, initial) {
+    *traverse(queries, initial, result2input) {
+      for(const result of this.tripleQueries(queries, initial)) {
         yield result;
         initial = new Map([...result2input.entries()].map(([k,v]) => [v,result.get(v)]));
       }
