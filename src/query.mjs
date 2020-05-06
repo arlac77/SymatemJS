@@ -1,5 +1,15 @@
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
+
+    /*
+    initPredefinedSymbols()
+    {
+      super.initPredefinedSymbols();
+
+      this.registerSymbolsInNamespace(ns, ['Placeholder']);
+    }
+    */
+
     variables(ns, ...names) {
       const result = {};
 
