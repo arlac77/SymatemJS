@@ -25,14 +25,11 @@ export function SymatemQueryMixin(base) {
     }
 
     isVariable(symbol) {
-      for (const r of this.queryTriples(this.queryMasks.MMM, [
+      return this.getTriple( [
         symbol,
         this.symbolByName.Void,
         this.symbolByName.Void
-      ])) {
-        return true;
-      }
-      return false;
+      ]);
     }
 
     *query(queries = [], initial = new Map()) {
