@@ -9,3 +9,14 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/SymatemQuery/badge.svg)](https://snyk.io/test/github/arlac77/SymatemQuery)
 [![codecov.io](http://codecov.io/github/arlac77/SymatemQuery/coverage.svg?branch=master)](http://codecov.io/github/arlac77/SymatemQuery?branch=master)
 [![Coverage Status](https://coveralls.io/repos/arlac77/SymatemQuery/badge.svg)](https://coveralls.io/r/arlac77/SymatemQuery)
+
+# SymatemQuery
+
+queries within SymatemJS
+
+
+# API
+
+# license
+
+BSD-2-Clause
