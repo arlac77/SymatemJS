@@ -56,7 +56,7 @@ test("query", async t => {
   ]);
 });
 
-test.skip("query with initial", async t => {
+test("query with initial", async t => {
   const {
     recordingNamespace,
     backend,

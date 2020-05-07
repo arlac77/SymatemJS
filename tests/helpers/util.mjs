@@ -1,5 +1,4 @@
 import {
-  loaded,
   Diff,
   SymbolInternals,
   RelocationTable,
@@ -9,10 +8,8 @@ import {
 import { SymatemQueryMixin } from "SymatemQuery";
 
 export async function prepareBackend(options = {}) {
-  await loaded;
-
   const BackendClass = SymatemQueryMixin(RustWasmBackend);
-  const backend = new BackendClass();
+  const backend = await new BackendClass();
 
   backend.initPredefinedSymbols();
 
