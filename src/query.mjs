@@ -1,13 +1,14 @@
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
-    /*
-    initPredefinedSymbols()
-    {
-      super.initPredefinedSymbols();
 
-      this.registerSymbolsInNamespace(ns, ['Placeholder']);
-    }
-    */
+    
+    /*initPredefinedSymbols() {
+      super.initPredefinedSymbols();
+      this.registerSymbolsInNamespace(this.metaNamespaceIdentity, [
+        "Placeholder",
+        "Literal"
+      ], true);
+    }*/
 
     variables(ns, ...names) {
       const result = {};
@@ -25,7 +26,7 @@ export function SymatemQueryMixin(base) {
     }
 
     isVariable(symbol) {
-      return this.getTriple( [
+      return this.getTriple([
         symbol,
         this.symbolByName.Void,
         this.symbolByName.Void
@@ -124,7 +125,7 @@ export function SymatemQueryMixin(base) {
           }
         }
 
-        if(found) {
+        if (found) {
           yield r;
         }
       }
