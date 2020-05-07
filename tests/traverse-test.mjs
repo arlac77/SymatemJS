@@ -24,17 +24,15 @@ test("traverse", async t => {
 
   const { A, B } = backend.variables(recordingNamespace, "A", "B");
 
-  const results = [];
+  const results = [
+    ...backend.traverse([[A, a1, B]], new Map([[A, s1]]), new Map([[B, A]]))
+  ];
 
-  for (const r of backend.traverse(
-    [[A, a1, B]],
-    new Map([[A, s1]]),
-    new Map([[B, A]])
-  )) {
-    results.push(r);
-  }
-
-   console.log(results.map(r => new Map([...r.entries()].map(([k,v]) => [backend.getData(k),v]))));
+  console.log(
+    results.map(
+      r => new Map([...r.entries()].map(([k, v]) => [backend.getData(k), v]))
+    )
+  );
 
   t.deepEqual(results, [
     new Map([

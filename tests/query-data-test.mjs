@@ -22,11 +22,9 @@ test("query data", async t => {
 
   const { A } = backend.variables(recordingNamespace, "A");
 
-  const results = [];
-
-  for (const r of backend.queryData([[s1, a1, A]], new Map([[A, "my data"]]))) {
-    results.push(r);
-  }
+  const results = [
+    ...backend.queryData([[s1, a1, A]], new Map([[A, "my data"]]))
+  ];
 
   console.log(
     results.map(

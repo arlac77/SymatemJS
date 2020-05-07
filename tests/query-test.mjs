@@ -79,11 +79,7 @@ test("query with initial", async t => {
 
   const { A, B } = backend.variables(recordingNamespace, "A", "B");
 
-  const results = [];
-
-  for (const r of backend.query([[A, a1, B]], new Map([[A, s2]]))) {
-    results.push(r);
-  }
+  const results = [...backend.query([[A, a1, B]], new Map([[A, s2]]))];
 
   console.log(
     results.map(
