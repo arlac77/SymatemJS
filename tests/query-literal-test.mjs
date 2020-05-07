@@ -1,7 +1,7 @@
 import test from "ava";
 import { prepareBackend } from "./helpers/util.mjs";
 
-test("query data", async t => {
+test("query with literal", async t => {
   const {
     recordingNamespace,
     backend,
@@ -16,15 +16,14 @@ test("query data", async t => {
   });
 
   writer.setTriple([s1, a1, s2], true);
-  writer.setTriple([s1, a1, s3], true);
   backend.setData(s2, "my data");
+
+  writer.setTriple([s1, a1, s3], true);
   backend.setData(s3, "not my data");
 
-  const { A } = backend.variables(recordingNamespace, "A");
+  const { D } = backend.literals(recordingNamespace, { D: "my data" });
 
-  const results = [
-    ...backend.queryData([[s1, a1, A]], new Map([[A, "my data"]]))
-  ];
+  const results = [...backend.query([[s1, a1, D]])];
 
   console.log(
     results.map(
@@ -32,5 +31,5 @@ test("query data", async t => {
     )
   );
 
-  t.deepEqual(results, [new Map([[A, s2]])]);
+  t.deepEqual(results, [new Map([[D, s2]])]);
 });

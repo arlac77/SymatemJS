@@ -1,6 +1,5 @@
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
-
     /*
     initPredefinedSymbols() {
       super.initPredefinedSymbols();
@@ -29,6 +28,17 @@ export function SymatemQueryMixin(base) {
       return result;
     }
 
+    literals(ns, literals) {
+      const result = this.variables(ns, ...Object.keys(literals));
+
+      for (const [name, value] of Object.entries(literals)) {
+        const ds = this.createSymbol(ns);
+        this.setData(ds, value);
+        this.setTriple([result[name], this.symbolByName.Value, ds], true);
+      }
+      return result;
+    }
+
     isVariable(symbol) {
       return this.getTriple([
         symbol,
@@ -37,19 +47,32 @@ export function SymatemQueryMixin(base) {
       ]);
     }
 
+    getLiteralData(symbol) {
+      for (const r of this.queryTriples(this.queryMasks.MMV, [
+        symbol,
+        this.symbolByName.Value,
+        this.symbolByName.Void
+      ])) {
+        return this.getData(r[2]);
+      }
+    }
+
     /**
      * Execute SPARQL like query
-     * The symbol table can be filled with plain symbols or 'Variable'
+     * The symbol table can be filled with plain symbols variables or literals
      * symbols as defined with variable()
      * ```js
      * const ns = ...
-     * const s1,s2 = ...
-     * const {A,B} = backend.variables(ns,'A','B','C');
+     * const s1,s2,s3 = ...
+     * const {A,B,C} = backend.variables(ns,'A','B','C');
+     * const {D} = backend.literals(ns,{D: "my data"});
      * for(const result of backend.query([
      *   [A, s1, B],
-     *   [B, s2, C]
+     *   [B, s2, C],
+     *   [C, s3, D]
      * ])) {
      *  result.get('A') // symbol for placeholder 'A'
+     *  result.get('D') // symbol for literal 'D'
      * }
      * ```
      * @param {Symbol[][]} queries
@@ -72,12 +95,24 @@ export function SymatemQueryMixin(base) {
         for (const r of this.queryTriples(mask, query)) {
           const results = new Map(initial);
 
+          let found = true;
+
           query.forEach((s, i) => {
             if (isVariable[i]) {
-              results.set(s, r[i]);
+              const literalData = this.getLiteralData(s);
+              if (
+                literalData !== undefined &&
+                literalData !== this.getData(r[i])
+              ) {
+                found = false;
+              } else {
+                results.set(s, r[i]);
+              }
             }
           });
-          yield* this.query(queries.slice(1), results);
+          if (found) {
+            yield* this.query(queries.slice(1), results);
+          }
         }
       }
     }
@@ -97,41 +132,7 @@ export function SymatemQueryMixin(base) {
           [...result2initial.entries()].map(([k, v]) => [v, result.get(k)])
         );
 
-        /*
-        console.log(queries);
-        console.log(
-          "R",
-          new Map([...result.entries()].map(([k, v]) => [this.getData(k), v]))
-        );
-        console.log(
-          "I",
-          new Map([...initial.entries()].map(([k, v]) => [this.getData(k), v]))
-        );*/
-
         yield* this.traverse(queries, initial, result2initial);
-      }
-    }
-
-    /**
-     * Deliver all entries matching query and having data assigned
-     * @param {Symbol[][]} queries
-     * @param {Map<Variable,any>} data
-     * @param {Map<Variable,Symbol>}initial
-     * @return {Iterator<Map<Variable,Symbol>>}
-     */
-    *queryData(queries, data, initial) {
-      for (const r of this.query(queries, initial)) {
-        let found = true;
-        for (const [k, v] of data) {
-          if (v !== this.getData(r.get(k))) {
-            found = false;
-            break;
-          }
-        }
-
-        if (found) {
-          yield r;
-        }
       }
     }
   };
