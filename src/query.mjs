@@ -32,6 +32,25 @@ export function SymatemQueryMixin(base) {
       ]);
     }
 
+    /**
+     * Execute SPARQL like query
+     * The symbol table can be filled with plain symbols or 'Variable'
+     * symbols as defined with variable()
+     * ```js
+     * const ns = ...
+     * const s1,s2 = ...
+     * const {A,B} = backend.variables(ns,'A','B','C');
+     * for(const result of backend.query([
+     *   [A, s1, B],
+     *   [B, s2, C]
+     * ])) {
+     *  result.get('A') // symbol for placeholder 'A'
+     * }
+     * ```
+     * @param {Symbol[][]} queries
+     * @param {Map<Variable,Symbol>} initial
+     * @return {Iterator<Map<Variable,Symbol>>}
+     */
     *query(queries = [], initial = new Map()) {
       if (queries.length === 0) {
         yield initial;
@@ -60,17 +79,17 @@ export function SymatemQueryMixin(base) {
 
     /**
      * Traverse the graph by applying query over and over again.
-     * After each iteration mapping results back into query (by using result2input)
+     * After each iteration mapping results back into initial (by using result2initial)
      * @param {Symbol[][]} queries
      * @param {Map<Variable,Symbol>} initial
-     * @param {Map<Variable,Variable>} result2input
+     * @param {Map<Variable,Variable>} result2initial
      * @return {Iterator<Map<Variable,Symbol>>}
      */
-    *traverse(queries, initial, result2input) {
+    *traverse(queries, initial, result2initial) {
       for (const result of this.query(queries, initial)) {
         yield result;
         initial = new Map(
-          [...result2input.entries()].map(([k, v]) => [v, result.get(k)])
+          [...result2initial.entries()].map(([k, v]) => [v, result.get(k)])
         );
 
         /*
@@ -84,7 +103,7 @@ export function SymatemQueryMixin(base) {
           new Map([...initial.entries()].map(([k, v]) => [this.getData(k), v]))
         );*/
 
-        yield* this.traverse(queries, initial, result2input);
+        yield* this.traverse(queries, initial, result2initial);
       }
     }
 
