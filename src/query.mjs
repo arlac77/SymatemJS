@@ -1,6 +1,5 @@
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
-
     /*
     initPredefinedSymbols()
     {
@@ -68,7 +67,7 @@ export function SymatemQueryMixin(base) {
      * @param {Symbol[][]} queries
      * @param {Map<Variable,Symbol>} initial
      * @param {Map<Variable,Variable>} result2input
-     * @return {Map<Variable,Symbol>}
+     * @return {Iterator<Map<Variable,Symbol>>}
      */
     *traverse(queries, initial, result2input) {
       for (const result of this.query(queries, initial)) {
@@ -89,6 +88,29 @@ export function SymatemQueryMixin(base) {
         );*/
 
         yield* this.traverse(queries, initial, result2input);
+      }
+    }
+
+    /**
+     * Deliver all entries matching query and having data assigned
+     * @param {Symbol[][]} queries
+     * @param {Map<Variable,any>} data
+     * @param {Map<Variable,Symbol>}initial
+     * @return {Iterator<Map<Variable,Symbol>>}
+     */
+    *queryData(queries, data, initial) {
+      for (const r of this.query(queries, initial)) {
+        let found = true;
+        for (const [k, v] of data) {
+          if (v !== this.getData(r.get(k))) {
+            found = false;
+            break;
+          }
+        }
+
+        if(found) {
+          yield r;
+        }
       }
     }
   };
