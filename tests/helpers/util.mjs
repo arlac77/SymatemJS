@@ -5,7 +5,7 @@ import {
   RustWasmBackend
 } from "SymatemJS";
 
-import { SymatemQueryMixin } from "SymatemQuery";
+import { SymatemQueryMixin } from "@symatem/query";
 
 export async function prepareBackend(options = {}) {
   const BackendClass = SymatemQueryMixin(RustWasmBackend);

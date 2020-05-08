@@ -1,7 +1,6 @@
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
-
-/*
+    /*
     initPredefinedSymbols() {
       super.initPredefinedSymbols();
       this.registerNamespaces({ Query: ["Placeholder", "Literal"] });

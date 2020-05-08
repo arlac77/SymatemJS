@@ -1,5 +1,5 @@
 {
-  "name": "SymatemQuery",
+  "name": "@symatem/query",
   "version": "0.0.0-semantic-release",
   "publishConfig": {
     "access": "public"
