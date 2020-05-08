@@ -40,18 +40,8 @@ test("query", async t => {
     )
   );
 
-  t.deepEqual(results, [
-    new Map([
-      [A, s2],
-      [B, s3],
-      [C, s4]
-    ]),
-    new Map([
-      [A, s2],
-      [B, s3],
-      [C, s5]
-    ])
-  ]);
+  t.truthy(results.find(r => r.get(A) === s2 && r.get(B) === s3 && r.get(C) === s4));
+  t.truthy(results.find(r => r.get(A) === s2 && r.get(B) === s3 && r.get(C) === s5));
 });
 
 test("query with initial", async t => {
