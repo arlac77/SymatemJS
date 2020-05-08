@@ -10,9 +10,28 @@
 [![codecov.io](http://codecov.io/github/arlac77/SymatemQuery/coverage.svg?branch=master)](http://codecov.io/github/arlac77/SymatemQuery?branch=master)
 [![Coverage Status](https://coveralls.io/repos/arlac77/SymatemQuery/badge.svg)](https://coveralls.io/r/arlac77/SymatemQuery)
 
-# SymatemQuery
+# @symatem/query
 
 queries within SymatemJS
+
+```js
+import { SymatemQueryMixin } from "@symatem/query";
+
+...
+
+const backend = await new SymatemQueryMixin(RustWasmBackend);
+
+const {isa} = myRootSymbols;
+const { A, baseType } = backend.placeholders(recordingNamespace, {A:undefined, baseType: 'baseType'});
+
+for(const result of backend.query([
+    [A, isa, B],
+    [B, isa, baseType]
+    ]))
+    {
+        console.log(result.get(A),result.get(B));
+    }
+```
 
 # API
 
