@@ -11,8 +11,6 @@ export async function prepareBackend(options = {}) {
   const BackendClass = SymatemQueryMixin(RustWasmBackend);
   const backend = await new BackendClass();
 
-  backend.initPredefinedSymbols();
-
   const repositoryNamespace = SymbolInternals.identityOfSymbol(
     backend.createSymbol(backend.metaNamespaceIdentity)
   );
