@@ -1,17 +1,12 @@
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
-    /*
+
+/*
     initPredefinedSymbols() {
       super.initPredefinedSymbols();
-
-      this.registerNamespaces({ Query: ["Placeholder", "Literal"] }, false);
-
-      this.registerSymbolsInNamespace(
-        this.metaNamespaceIdentity,
-        ["Placeholder", "Literal"],
-        true
-      );
-    }*/
+      this.registerNamespaces({ Query: ["Placeholder", "Literal"] });
+    }
+*/
 
     variables(ns, ...names) {
       const result = {};
