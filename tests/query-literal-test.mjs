@@ -21,7 +21,7 @@ test("query with literal", async t => {
   writer.setTriple([s1, a1, s3], true);
   backend.setData(s3, "not my data");
 
-  const { D } = backend.literals(recordingNamespace, { D: "my data" });
+  const { D } = backend.placeholders(recordingNamespace, { D: "my data" });
 
   const results = [...backend.query([[s1, a1, D]])];
 

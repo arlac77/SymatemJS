@@ -22,7 +22,7 @@ test("traverse", async t => {
   writer.setTriple([s3, a1, s4], true);
   writer.setTriple([s4, a1, s5], true);
 
-  const { A, B } = backend.variables(recordingNamespace, "A", "B");
+  const { A, B } = backend.placeholders(recordingNamespace, ["A", "B"]);
 
   const results = [
     ...backend.traverse([[A, a1, B]], new Map([[A, s1]]), new Map([[B, A]]))

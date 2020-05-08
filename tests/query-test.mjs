@@ -24,7 +24,7 @@ test("query", async t => {
   writer.setTriple([s3, a3, s4], true);
   writer.setTriple([s3, a3, s5], true);
 
-  const { A, B, C } = backend.variables(recordingNamespace, "A", "B", "C");
+  const { A, B, C } = backend.placeholders(recordingNamespace, ["A", "B", "C"]);
 
   const results = [
     ...backend.query([
@@ -65,7 +65,7 @@ test("query with initial", async t => {
   writer.setTriple([s3, a1, s4], true);
   writer.setTriple([s4, a1, s5], true);
 
-  const { A, B } = backend.variables(recordingNamespace, "A", "B");
+  const { A, B } = backend.placeholders(recordingNamespace, ["A", "B"]);
 
   const results = [...backend.query([[A, a1, B]], new Map([[A, s2]]))];
 
