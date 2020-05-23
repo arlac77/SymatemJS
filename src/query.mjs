@@ -6,7 +6,7 @@ export function SymatemQueryMixin(base) {
     }
 
     /**
-     * define query placeholders.
+     * Define query placeholders.
      * Either as wildcards without data
      * or with matching data
      * @param ns
