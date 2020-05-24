@@ -114,6 +114,43 @@ export function SymatemQueryMixin(base) {
         }
       }
     }
+    /**
+     * Creates triples with associated data.
+     * But only if there are no such triples already
+     * @param {Symbol[][]} queries
+     * @param {Namespace} ns where to insert missing symbols
+     */
+    link(queries, ns) {
+      if (queries.length === 0) {
+        return [];
+      }
+
+      const query = queries[0];
+
+      const isPlaceholder = query.map(s => this.isPlaceholder(s));
+      const mask = this.queryMasks[
+        isPlaceholder.map(f => (f ? "V" : "M")).join("")
+      ];
+
+      for (const r of this.queryTriples(mask, query)) {
+        return [r, ...this.link(queries.slice(1), ns)];
+      }
+
+      const triple = query.map((s, i) => {
+        if (isPlaceholder[i]) {
+          const data = this.getLiteralData(s);
+          s = this.createSymbol(ns);
+          if (data !== undefined) {
+            this.setData(s, data);
+          }
+        }
+        return s;
+      });
+
+      this.setTriple(triple, true);
+
+      return [triple, ...this.link(queries.slice(1), ns)];
+    }
 
     /**
      * Traverse the graph by applying query over and over again.
