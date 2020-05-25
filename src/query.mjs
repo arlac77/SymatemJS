@@ -114,18 +114,21 @@ export function SymatemQueryMixin(base) {
         }
       }
     }
+
     /**
      * Creates triples with associated data.
      * But only if there are no such triples already
      * @param {Symbol[][]} queries
      * @param {Namespace} ns where to insert missing symbols
      */
-    link(queries, ns) {
+    link(queries, ns, initial=new Map()) {
       if (queries.length === 0) {
         return [];
       }
 
-      const query = queries[0];
+      const query = queries[0].map(s =>
+        initial.get(s) ? initial.get(s) : s
+      );
 
       const isPlaceholder = query.map(s => this.isPlaceholder(s));
       const mask = this.queryMasks[
@@ -133,23 +136,25 @@ export function SymatemQueryMixin(base) {
       ];
 
       for (const r of this.queryTriples(mask, query)) {
-        return [r, ...this.link(queries.slice(1), ns)];
+        return [r, ...this.link(queries.slice(1), ns, initial)];
       }
 
       const triple = query.map((s, i) => {
         if (isPlaceholder[i]) {
+          const cs = this.createSymbol(ns);
+          initial.set(s, cs);
           const data = this.getLiteralData(s);
-          s = this.createSymbol(ns);
           if (data !== undefined) {
-            this.setData(s, data);
+            this.setData(cs, data);
           }
+          return cs;
         }
         return s;
       });
 
       this.setTriple(triple, true);
 
-      return [triple, ...this.link(queries.slice(1), ns)];
+      return [triple, ...this.link(queries.slice(1), ns, initial)];
     }
 
     /**
