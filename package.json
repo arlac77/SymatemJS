@@ -8,8 +8,7 @@
   "type": "module",
   "main": "./src/query.mjs",
   "exports": {
-    ".": "./src/query.mjs",
-    "./": "./"
+    ".": "./src/query.mjs"
   },
   "description": "queries within SymatemJS",
   "contributors": [
