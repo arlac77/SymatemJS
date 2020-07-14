@@ -12,7 +12,7 @@
 
 # @symatem/query
 
-queries within SymatemJS
+Queries within SymatemJS
 
 ```js
 import { SymatemQueryMixin } from "@symatem/query";

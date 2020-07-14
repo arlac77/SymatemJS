@@ -1,3 +1,8 @@
+
+/**
+ * Extend the backend with the query functionality.
+ * @param {Function) prototype of the backend class to extend
+ */
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {
     initPredefinedSymbols() {
@@ -57,8 +62,8 @@ export function SymatemQueryMixin(base) {
 
     /**
      * Execute SPARQL like query
-     * The symbol table can be filled with plain symbols placeholders or literals
-     * symbols as defined with placeholders()
+     * The symbol table can be filled with plain symbols placeholders or literals.
+     * Symbols as defined with {@link placeholders()}
      * ```js
      * const ns = ...
      * const s1,s2,s3 = ...
