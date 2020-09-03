@@ -14,7 +14,7 @@ export function SymatemQueryMixin(base) {
      * Define query placeholders.
      * Either as wildcards without data
      * or with matching data
-     * @param ns
+     * @param {Namespce} ns
      * @param {Object|String[]} definition
      */
     placeholders(ns, definition) {
@@ -62,7 +62,7 @@ export function SymatemQueryMixin(base) {
 
     /**
      * Execute SPARQL like query
-     * The symbol table can be filled with plain symbols placeholders or literals.
+     * The symbol table can be filled with plain symbols, placeholders or literals.
      * Symbols as defined with {@link placeholders()}
      * ```js
      * const ns = ...
