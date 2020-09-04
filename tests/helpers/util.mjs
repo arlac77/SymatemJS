@@ -14,9 +14,6 @@ export async function prepareBackend(options = {}) {
   const repositoryNamespace = SymbolInternals.identityOfSymbol(
     backend.createSymbol(backend.metaNamespaceIdentity)
   );
-  const modalNamespace = SymbolInternals.identityOfSymbol(
-    backend.createSymbol(backend.metaNamespaceIdentity)
-  );
   const recordingNamespace = SymbolInternals.identityOfSymbol(
     backend.createSymbol(backend.metaNamespaceIdentity)
   );
@@ -40,7 +37,6 @@ export async function prepareBackend(options = {}) {
     backend,
     recordingNamespace,
     repositoryNamespace,
-    modalNamespace,
     repository
   };
 }
