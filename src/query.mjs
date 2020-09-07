@@ -14,7 +14,7 @@ export function SymatemQueryMixin(base) {
      * Define query placeholders.
      * Either as wildcards without data
      * or with matching data
-     * @param {Namespce} ns
+     * @param {Namespace} ns
      * @param {Object|String[]} definition
      */
     placeholders(ns, definition) {
@@ -75,7 +75,7 @@ export function SymatemQueryMixin(base) {
      *   [C, s3, D]
      * ])) {
      *  result.get('A') // symbol for placeholder 'A'
-     *  result.get('D') // symbol for placeholder 'D' mtching data
+     *  result.get('D') // symbol for placeholder 'D' matching data
      * }
      * ```
      * @param {Symbol[][]} queries
