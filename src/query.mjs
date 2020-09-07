@@ -1,7 +1,7 @@
 
 /**
  * Extend the backend with the query functionality.
- * @param {Function) prototype of the backend class to extend
+ * @param {function} base prototype of the backend class to extend
  */
 export function SymatemQueryMixin(base) {
   return class SymatemQueryMixin extends base {

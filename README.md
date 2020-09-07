@@ -47,7 +47,7 @@ Extend the backend with the query functionality.
 
 ### Parameters
 
--   `base`  
+-   `base` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** prototype of the backend class to extend
 
 # license
 
