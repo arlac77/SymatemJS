@@ -25,7 +25,7 @@
     "lint": "documentation lint ./src/query.mjs"
   },
   "dependencies": {
-    "SymatemJS": "git+https://github.com/Symatem/SymatemJS.git"
+    "@symatem/core": "git+https://github.com/Symatem/SymatemJS.git"
   },
   "devDependencies": {
     "ava": "^3.13.0",

@@ -3,7 +3,7 @@ import {
   SymbolInternals,
   Repository,
   RustWasmBackend
-} from "SymatemJS";
+} from "@symatem/core";
 
 import { SymatemQueryMixin } from "@symatem/query";
 
