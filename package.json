@@ -27,6 +27,7 @@
     "lint:docs": "documentation lint ./src/query.mjs"
   },
   "dependencies": {
+    "@symatem/compiler": "git+https://github.com/Symatem/Compiler.git",
     "@symatem/core": "git+https://github.com/Symatem/SymatemJS.git"
   },
   "devDependencies": {
