@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@symatem/compiler": "git+https://github.com/Symatem/Compiler.git",
-    "@symatem/core": "^0.0.2"
+    "@symatem/core": "^0.0.3"
   },
   "devDependencies": {
     "ava": "^3.13.0",
